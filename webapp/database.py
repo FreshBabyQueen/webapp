@@ -21,7 +21,7 @@ class DatabaseConnection:
         for attempt in range(retries):
             try:
                 self.connection = mysql.connector.connect(
-                    host=os.getenv('DB_HOST', 'localhost'),  # Use 'db' if using Docker
+                    host=os.getenv('DB_HOST', 'localhost'),  
                     port=int(os.getenv('DB_PORT', 3307)),    # Ensure the port is an integer
                     user=os.getenv('DB_USER', 'root'),
                     password=os.getenv('DB_PASSWORD', 'Fall2024'),
