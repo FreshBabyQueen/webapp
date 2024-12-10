@@ -1,0 +1,53 @@
+body {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.card-header {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    border-radius: 15px 15px 0 0;
+    color: #fff;
+}
+
+.form-floating .form-control {
+    border-radius: 25px;
+    padding: 20px;
+    height: 60px;
+    font-size: 16px;
+}
+
+.form-floating label {
+    padding: 10px;
+    color: #777;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 8px rgba(106, 17, 203, 0.5);
+    border-color: #6a11cb;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.5);
+}
+
+a.text-primary {
+    color: #6a11cb;
+    text-decoration: none;
+}
+
+a.text-primary:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,134 @@
+{% extends "index.html" %} 
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center">Add a Movie</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('add_movie') }}" method="POST">
+                    <!-- Movie Title -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Movie Title</label>
+                        <input 
+                            type="text" 
+                            id="title" 
+                            name="title" 
+                            class="form-control" 
+                            placeholder="Enter movie title" 
+                            required
+                            value="{{ request.form.title or '' }}">
+                    </div>
+                    
+                    <!-- Release Year -->
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Release Year</label>
+                        <input 
+                            type="number" 
+                            id="year" 
+                            name="year" 
+                            class="form-control" 
+                            placeholder="Enter release year" 
+                            required
+                            value="{{ request.form.year or '' }}"
+                            min="1800" 
+                            max="2100">
+                    </div>
+                    
+                    <!-- Director -->
+                    <div class="mb-3">
+                        <label for="director" class="form-label">Director</label>
+                        <input 
+                            type="text" 
+                            id="director" 
+                            name="director" 
+                            class="form-control" 
+                            placeholder="Enter director's name" 
+                            required
+                            value="{{ request.form.director or '' }}">
+                    </div>
+                    
+                    <!-- Writers -->
+                    <div class="mb-3">
+                        <label for="writers" class="form-label">Writers</label>
+                        <input 
+                            type="text" 
+                            id="writers" 
+                            name="writers" 
+                            class="form-control" 
+                            placeholder="Enter writers' names" 
+                            required
+                            value="{{ request.form.writers or '' }}">
+                    </div>
+                    
+                    <!-- Stars -->
+                    <div class="mb-3">
+                        <label for="stars" class="form-label">Stars</label>
+                        <input 
+                            type="text" 
+                            id="stars" 
+                            name="stars" 
+                            class="form-control" 
+                            placeholder="Enter main stars" 
+                            required
+                            value="{{ request.form.stars or '' }}">
+                    </div>
+                    
+                    <!-- Genre Dropdown -->
+                    <div class="mb-3">
+                        <label for="genre" class="form-label">Genre</label>
+                        <select 
+                            id="genre" 
+                            name="genre" 
+                            class="form-select" 
+                            required>
+                            <option value="" disabled {% if not request.form.genre %}selected{% endif %}>Select Genre</option>
+                            <option value="Action" {% if request.form.genre == 'Action' %}selected{% endif %}>Action</option>
+                            <option value="Adventure" {% if request.form.genre == 'Adventure' %}selected{% endif %}>Adventure</option>
+                            <option value="Animation" {% if request.form.genre == 'Animation' %}selected{% endif %}>Animation</option>
+                            <option value="Biography" {% if request.form.genre == 'Biography' %}selected{% endif %}>Biography</option>
+                            <option value="Comedy" {% if request.form.genre == 'Comedy' %}selected{% endif %}>Comedy</option>
+                            <option value="Crime" {% if request.form.genre == 'Crime' %}selected{% endif %}>Crime</option>
+                            <option value="Documentary" {% if request.form.genre == 'Documentary' %}selected{% endif %}>Documentary</option>
+                            <option value="Drama" {% if request.form.genre == 'Drama' %}selected{% endif %}>Drama</option>
+                            <option value="Family" {% if request.form.genre == 'Family' %}selected{% endif %}>Family</option>
+                            <option value="Fantasy" {% if request.form.genre == 'Fantasy' %}selected{% endif %}>Fantasy</option>
+                            <option value="History" {% if request.form.genre == 'History' %}selected{% endif %}>History</option>
+                            <option value="Horror" {% if request.form.genre == 'Horror' %}selected{% endif %}>Horror</option>
+                            <option value="Music" {% if request.form.genre == 'Music' %}selected{% endif %}>Music</option>
+                            <option value="Musical" {% if request.form.genre == 'Musical' %}selected{% endif %}>Musical</option>
+                            <option value="Mystery" {% if request.form.genre == 'Mystery' %}selected{% endif %}>Mystery</option>
+                            <option value="Romance" {% if request.form.genre == 'Romance' %}selected{% endif %}>Romance</option>
+                            <option value="Sci-Fi" {% if request.form.genre == 'Sci-Fi' %}selected{% endif %}>Sci-Fi</option>
+                            <option value="Sport" {% if request.form.genre == 'Sport' %}selected{% endif %}>Sport</option>
+                            <option value="Thriller" {% if request.form.genre == 'Thriller' %}selected{% endif %}>Thriller</option>
+                            <option value="War" {% if request.form.genre == 'War' %}selected{% endif %}>War</option>
+                            <option value="Western" {% if request.form.genre == 'Western' %}selected{% endif %}>Western</option>
+                            <option value="Family and Animation" {% if request.form.genre == 'Family and Animation' %}selected{% endif %}>Family and Animation</option>
+                            <option value="Musical and Performance" {% if request.form.genre == 'Musical and Performance' %}selected{% endif %}>Musical and Performance</option>
+                            <option value="Documentary and Factual" {% if request.form.genre == 'Documentary and Factual' %}selected{% endif %}>Documentary and Factual</option>
+                            <option value="Other" {% if request.form.genre == 'Other' %}selected{% endif %}>Other Genres</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100">Add Movie</button>
+                </form>
+                
+                <!-- Error Display -->
+                {% if error %}
+                <div class="alert alert-danger mt-3">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <!-- Back to Movie Collection -->
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('movies') }}" class="btn btn-secondary">Back to Movie Collection</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center">Login</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('login') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <div class="text-center mt-3">
+                    <!-- Back to Register Button -->
+                    <a href="{{ url_for('register') }}" class="btn btn-secondary w-100">Back to Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

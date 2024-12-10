@@ -1,0 +1,138 @@
+{% extends "index.html" %}
+{% block content %}
+
+<!-- User's Movie Collection Title -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h1 class="fw-bold" style="color: black;">
+                {{ username[:-1].capitalize() + username[-1].upper() if username else '' }}'s Movie Collection
+            </h1>
+            <p class="lead" style="color: black;">
+                Your curated list of favorite movies!
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Genre Dropdown Filter -->
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <label for="genre-filter" class="form-label fw-bold" style="color: black;">Filter by Genre</label>
+            <form method="POST" action="{{ url_for('movies') }}" class="d-inline-block">
+                <select id="genre-filter" name="genre" class="form-select w-auto d-inline-block">
+                    <option value="" disabled selected>Select Genre</option>
+                    <option value="All" {% if selected_genre == 'All' %}selected{% endif %}>All Genres</option>
+                    <option value="Action" {% if selected_genre == 'Action' %}selected{% endif %}>Action</option>
+                    <option value="Adventure" {% if selected_genre == 'Adventure' %}selected{% endif %}>Adventure</option>
+                    <option value="Animation" {% if selected_genre == 'Animation' %}selected{% endif %}>Animation</option>
+                    <option value="Biography" {% if selected_genre == 'Biography' %}selected{% endif %}>Biography</option>
+                    <option value="Comedy" {% if selected_genre == 'Comedy' %}selected{% endif %}>Comedy</option>
+                    <option value="Crime" {% if selected_genre == 'Crime' %}selected{% endif %}>Crime</option>
+                    <option value="Documentary" {% if selected_genre == 'Documentary' %}selected{% endif %}>Documentary</option>
+                    <option value="Drama" {% if selected_genre == 'Drama' %}selected{% endif %}>Drama</option>
+                    <option value="Family" {% if selected_genre == 'Family' %}selected{% endif %}>Family</option>
+                    <option value="Fantasy" {% if selected_genre == 'Fantasy' %}selected{% endif %}>Fantasy</option>
+                    <option value="History" {% if selected_genre == 'History' %}selected{% endif %}>History</option>
+                    <option value="Horror" {% if selected_genre == 'Horror' %}selected{% endif %}>Horror</option>
+                    <option value="Music" {% if selected_genre == 'Music' %}selected{% endif %}>Music</option>
+                    <option value="Musical" {% if selected_genre == 'Musical' %}selected{% endif %}>Musical</option>
+                    <option value="Mystery" {% if selected_genre == 'Mystery' %}selected{% endif %}>Mystery</option>
+                    <option value="Romance" {% if selected_genre == 'Romance' %}selected{% endif %}>Romance</option>
+                    <option value="Sci-Fi" {% if selected_genre == 'Sci-Fi' %}selected{% endif %}>Sci-Fi</option>
+                    <option value="Sport" {% if selected_genre == 'Sport' %}selected{% endif %}>Sport</option>
+                    <option value="Thriller" {% if selected_genre == 'Thriller' %}selected{% endif %}>Thriller</option>
+                    <option value="War" {% if selected_genre == 'War' %}selected{% endif %}>War</option>
+                    <option value="Western" {% if selected_genre == 'Western' %}selected{% endif %}>Western</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm ms-2">Filter</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Movie Collection -->
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{{ url_for('add_movie') }}" class="btn btn-success btn-lg">Add a Movie</a>
+    </div>
+    <div class="row">
+        {% if movies %}
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4 movie-card" data-genre="{{ movie.genre }}">
+            <div class="card h-100 shadow-lg" style="border: 2px solid #ccc; padding: 10px; border-radius: 10px;"> <!-- Added border and padding -->
+                <!-- Movie Poster -->
+                <img src="{{ url_for('static', filename=movie.image_path if movie.image_path else 'images/default.jpg') }}" 
+                class="card-img-top rounded" 
+                alt="Poster for {{ movie.title }}" 
+                style="max-height: 200px; object-fit: cover;">
+
+
+
+                <div class="card-body">
+                    <h5 class="card-title text-primary text-center" style="color: black;">{{ movie.title }}</h5>
+                    <p class="card-text" style="color: black;">
+                        <strong>Year:</strong> {{ movie.year }}<br>
+                        <strong>Director:</strong> {{ movie.director }}<br>
+                        <strong>Writers:</strong> {{ movie.writers }}<br>
+                        <strong>Stars:</strong> {{ movie.stars }}<br>
+                        <strong>Genre:</strong> {{ movie.genre }}
+                    </p>
+                    {% if movie.trailer_url %}
+                    <div class="mt-3">
+                        <h6 class="text-secondary text-center" style="color: black;">Watch Trailer</h6>
+                        <iframe width="100%" height="150" 
+                                src="{{ movie.trailer_url }}" 
+                                title="Trailer for {{ movie.title }}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    {% else %}
+                    <p class="text-warning text-center mt-3">No trailer available.</p>
+                    {% endif %}
+                </div>
+                <!-- Attribution Section -->
+                <div class="card-footer text-center">
+                    <h6 class="fw-bold" style="color: black;">Sources</h6>
+                    <ul class="list-unstyled" style="color: black; font-size: 0.9rem;">
+                        <li>
+                            <div><strong>Image:</strong></div>
+                            <div>
+                                {{ movie.attribution.split(';')[0].strip() if movie.attribution and ';' in movie.attribution else 'No attribution available' }}
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>Trailer:</strong></div>
+                            <div>
+                                {{ movie.attribution.split(';')[1].strip() if movie.attribution and ';' in movie.attribution else 'No attribution available' }}
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <!-- Edit and Delete Buttons -->
+                    <a href="{{ url_for('edit_movie', movie_id=movie.id) }}" class="btn btn-info btn-sm">Edit</a>
+                    <form action="{{ url_for('delete_movie', movie_id=movie.id) }}" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-md-12">
+            <p class="text-center text-warning">No movies in the collection. Add some!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Logout Button -->
+<div class="container text-center my-4">
+    <a href="{{ url_for('logout') }}" class="btn btn-danger btn-lg">Logout</a>
+</div>
+
+{% endblock %}

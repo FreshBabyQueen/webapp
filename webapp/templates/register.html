@@ -1,0 +1,64 @@
+{% extends "index.html" %}
+{% block content %}
+
+<!-- Introductory Section with Movie Reel -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h1 class="fw-bold display-4" style="color: black;">Welcome to Movie App</h1>
+            <p class="lead text-muted">
+                Discover, collect, and share your favorite movies. Track your movie collection and join a
+                growing community of movie enthusiasts. Start your journey today!
+            </p>
+            <!-- Movie Reel Image -->
+            <div class="movie-reel mt-4">
+                <img src="{{ url_for('static', filename='uploads/Movie_Reel.jpg') }}" 
+                    alt="Movie Reel" 
+                    class="img-fluid rounded shadow-lg mt-3" 
+                    style="max-height: 150px; width: auto;">
+                <!-- Attribution for the image -->
+                <p class="text-muted small mt-2">
+                    Image source: <a href="https://wallpapercave.com/wp/wp8021237.jpg" target="_blank" style="color: #007bff; font-weight: bold;">Wallpaper Cave</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Registration Form -->
+<div class="row justify-content-center my-5">
+    <div class="col-lg-5 col-md-7">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-gradient-primary text-white text-center py-4">
+                <h3 class="fw-bold">Create Your Account</h3>
+                <p class="small mb-0">Register now and unlock amazing features!</p>
+            </div>
+            <div class="card-body p-4">
+                <h4 class="text-center mb-4">Sign Up</h4>
+                <p class="text-center text-muted small">
+                    Your account will give you access to your personal movie collection and more.
+                </p>
+                <form method="POST" action="{{ url_for('register') }}">
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control rounded-pill" id="username" name="username" 
+                               placeholder="Enter your username" required>
+                        <label for="username" class="form-label">Username</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control rounded-pill" id="password" name="password" 
+                               placeholder="Enter your password" required>
+                        <label for="password" class="form-label">Password</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold">Register</button>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="mb-0">Already have an account? 
+                        <a href="{{ url_for('login') }}" class="text-primary fw-bold">Log in here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
